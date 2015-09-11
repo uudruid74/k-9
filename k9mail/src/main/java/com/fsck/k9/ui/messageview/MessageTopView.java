@@ -54,6 +54,7 @@ public class MessageTopView extends LinearLayout implements ShowPicturesControll
         setShowPicturesButtonListener();
 
         containerViews = (LinearLayout) findViewById(R.id.message_containers);
+        super.onFinishInflate();
     }
 
     private void setShowPicturesButtonListener() {

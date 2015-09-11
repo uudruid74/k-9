@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -189,7 +190,6 @@ public class MessageViewFragment extends Fragment implements ConfirmationDialogF
         outState.putParcelable(STATE_MESSAGE_REFERENCE, mMessageReference);
         outState.putSerializable(STATE_PGP_DATA, mPgpData);
     }
-
     private void displayMessage(MessageReference ref, boolean resetPgpData) {
         mMessageReference = ref;
         if (K9.DEBUG) {
@@ -493,7 +493,7 @@ public class MessageViewFragment extends Fragment implements ConfirmationDialogF
         }
     }
 
-    private void onDownloadRemainder() {
+    public void onDownloadRemainder() {
         if (mMessage.isSet(Flag.X_DOWNLOADED_FULL)) {
             return;
         }

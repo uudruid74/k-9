@@ -42,6 +42,11 @@ public class SwipeGestureDetector extends SimpleOnGestureListener {
     }
 
     @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        return mListener.onDoubleTap(e);
+    }
+
+    @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         // Apparently sometimes e1 is null
         // Found a workaround here: http://stackoverflow.com/questions/4151385/
@@ -70,7 +75,10 @@ public class SwipeGestureDetector extends SimpleOnGestureListener {
                 mListener.onSwipeRightToLeft(e1, e2);
             } else if (deltaX > minDistance) {
                 mListener.onSwipeLeftToRight(e1, e2);
-            } else {
+            } else if (deltaY < (minDistance * -1)) {
+                mListener.onSwipeUpFromBottom(e1, e2);
+            } else if (deltaY > minDistance) {
+                mListener.onSwipeDownFromTop(e1,e2);
                 return false;
             }
 
@@ -115,5 +123,9 @@ public class SwipeGestureDetector extends SimpleOnGestureListener {
          *         The move motion event that triggered the current onFling.
          */
         void onSwipeLeftToRight(final MotionEvent e1, final MotionEvent e2);
+
+        void onSwipeUpFromBottom(final MotionEvent e1, final MotionEvent e2);
+        void onSwipeDownFromTop(final MotionEvent e1, final MotionEvent e2);
+        boolean onDoubleTap(final MotionEvent e1);
     }
 }

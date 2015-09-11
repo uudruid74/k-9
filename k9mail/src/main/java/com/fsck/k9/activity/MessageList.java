@@ -1242,6 +1242,8 @@ public class MessageList extends K9Activity implements MessageListFragmentListen
     public void onSwipeRightToLeft(MotionEvent e1, MotionEvent e2) {
         if (mMessageListFragment != null && mDisplayMode != DisplayMode.MESSAGE_VIEW) {
             mMessageListFragment.onSwipeRightToLeft(e1, e2);
+        } else if (mMessageViewFragment != null) {
+            showNextMessage();
         }
     }
 
@@ -1249,6 +1251,32 @@ public class MessageList extends K9Activity implements MessageListFragmentListen
     public void onSwipeLeftToRight(MotionEvent e1, MotionEvent e2) {
         if (mMessageListFragment != null && mDisplayMode != DisplayMode.MESSAGE_VIEW) {
             mMessageListFragment.onSwipeLeftToRight(e1, e2);
+        } else if (mMessageViewFragment != null) {
+            showPreviousMessage();
+        }
+    }
+
+    @Override
+    public boolean onDoubleTap (MotionEvent e1) {
+        if (mMessageViewFragment != null) {
+            if (e1.getPointerCount() >2)
+                mMessageViewFragment.onReplyAll();
+            else
+                mMessageViewFragment.onReply();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onSwipeUpFromBottom(MotionEvent e1, MotionEvent e2) {}
+
+    @Override
+    public void onSwipeDownFromTop(MotionEvent e1, MotionEvent e2) {
+        if (mMessageViewFragment != null) {
+            mMessageViewFragment.onDownloadRemainder();
+            Log.d("ME","Tried to Download Remainer of Message");
+            // TODO: I want to show pictures too.  Need reference to MessageContainerView
         }
     }
 
